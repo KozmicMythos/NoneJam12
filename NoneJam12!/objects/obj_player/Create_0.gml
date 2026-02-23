@@ -279,6 +279,7 @@ estado_run.roda = function (){
     ajusta_xscale();
     
     
+    
   //ficando parado
     if velh == 0 {
         troca_estado(estado_idle); 
@@ -293,7 +294,15 @@ estado_run.roda = function (){
     
     if !chao {
         troca_estado(estado_jump);
+    };
+    
+    //SE apertar para baixo e estiver encostando no CHECK escada
+    //então vou um pixel para baixo e meu estado é escada
+    if down && place_meeting(x,y+1,obj_check_escada){ 
+        y += 1;
+        troca_estado(estado_ladder)
     }
+    
     
 };
 
