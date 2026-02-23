@@ -1,4 +1,4 @@
-//mask_index = spr_player_idle;
+mask_index = spr_player;
 move_camera();
 checa_chao();
 comandos();
