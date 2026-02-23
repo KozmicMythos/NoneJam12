@@ -27,6 +27,37 @@ left  = 0;
 right = 0;
 jump  = 0;
 
+
+
+
+//FUNÇÕES CÂMERA
+cam_moving = false;
+cam_target_x = 0;
+cam_target_y = 0;
+
+//CAMERA
+move_camera = function () {
+    
+    //pegando o tamanho da camera
+    static _gridx = 320, _gridy = 180;
+    
+    //variaveis para saber a posição do player na grid
+    var _meux,_meuy;
+    
+    //dividindo o valor para q seja feito em grid
+    _meux = (x div _gridx) * _gridx;
+    _meuy = (y div _gridy) * _gridy;
+    
+    
+    //dando suavidade para o movimeento
+    var _suavidade = 0.08;
+    var cam_x = lerp(camera_get_view_x(view_camera[0]),_meux,_suavidade);
+    var cam_y = lerp(camera_get_view_y(view_camera[0]),_meuy,_suavidade);
+    
+    camera_set_view_pos(view_camera[0],cam_x,cam_y); 
+
+}
+
 //movimentacao
 comandos = function  (){
      

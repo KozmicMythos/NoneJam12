@@ -1,13 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"obj_chao",
+  "%Name":"obj_save",
   "eventList":[],
   "managed":true,
-  "name":"obj_chao",
+  "name":"obj_save",
   "overriddenProperties":[],
   "parent":{
-    "name":"Colisores",
-    "path":"folders/2 Objetos/Colisores.yy",
+    "name":"Save",
+    "path":"folders/2 Objetos/Save.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -27,10 +27,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"spr_chao",
-    "path":"sprites/spr_chao/spr_chao.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }
