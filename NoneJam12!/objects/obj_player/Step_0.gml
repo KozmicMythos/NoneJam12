@@ -12,4 +12,4 @@ move_and_collide(0,velv,colisor,22);
 //retornando o valor original
 retorna_squash();
 
-screenshake(23)
+//teste!"
