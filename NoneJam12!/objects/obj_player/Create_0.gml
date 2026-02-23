@@ -1,0 +1,250 @@
+//Variaveis de controle do personagem
+velh         = 0;
+velv         = 0;
+max_velh     = 1;
+max_velv     = 5;
+grav         = .2;
+pode_mexer   = true;
+spd          = 1;
+forca_pulo   = 3;
+//colocando a direção
+dir = 1;
+
+//Colisores
+lay_col  = layer_tilemap_get_id("Map");
+colisor      = [lay_col,obj_chao];
+
+//Iniciando o efeito squash
+inicia_efeito_squash();
+
+//timer para checar se o player pode pular ou nao
+coyote_total_timer = 10;
+coyote_timer       = coyote_total_timer;
+ajuda_pulo         = false;
+
+//Controles
+left  = 0;
+right = 0;
+jump  = 0;
+
+//movimentacao
+comandos = function  (){
+     
+    if pode_mexer {
+        // Teclado (WASD + setas)
+        right = keyboard_check(ord("D")) || keyboard_check(vk_right);
+        left  = keyboard_check(ord("A")) || keyboard_check(vk_left);
+        up    = keyboard_check(ord("W")) //|| keyboard_check(vk_up);
+        down  = keyboard_check(ord("S")) //|| keyboard_check(vk_down);
+        grab  = keyboard_check(ord("E"))
+        
+        // Gamepad Analógico
+        var lx = gamepad_axis_value(0, gp_axislh); // Eixo horizontal esquerdo
+        var ly = gamepad_axis_value(0, gp_axislv); // Eixo vertical esquerdo
+
+        if (lx > 0.2) right = true;
+        if (lx < -0.2) left  = true;
+        if (ly < -0.2) up    = true;
+        if (ly > 0.2) down  = true;
+
+        // Gamepad D-Pad
+        right = right || gamepad_button_check(0, gp_padr);
+        left  = left  || gamepad_button_check(0, gp_padl);
+        up    = up    || gamepad_button_check(0, gp_padu);
+        down  = down  || gamepad_button_check(0, gp_padd);
+
+        // Pulo (Teclado espaço ou controle face1)
+        jump = keyboard_check_pressed(vk_space) || gamepad_button_check_pressed(0, gp_face1) 
+        || keyboard_check_pressed(ord("Z"));
+    };
+ 
+};
+
+//colisao com o chao
+checa_chao = function () {
+    
+    chao = place_meeting(x, y + 1, colisor);  
+    
+    //se eu estiver no chao e não estiver na escada, faço meu Y desenhar corretamente na tela
+    //and !escada 
+    if chao  { 
+        y = round(y);
+    };
+    
+    if chao { 
+        coyote_timer = coyote_total_timer;
+        ajuda_pulo = true;
+    }else{
+        if coyote_timer > 0 coyote_timer--;
+    };
+    
+};
+
+//Ajustando a direção
+ajusta_xscale = function () { 
+
+    if (velh != 0) dir = sign(velh);
+    
+};
+
+movimentacao_vertical = function () {
+    
+     //Se eu nao estiver no chão, eu caio
+    
+    if (!chao)
+    {  
+        if (velv < max_velv) velv += grav;  else velv = max_velv; 
+            
+        //if coyote_timer > 0 coyote_timer --;
+        
+    }
+    else
+    {
+        //coyote_timer = coyote_total_timer;
+        if velv != 0  {
+            velv = 0;
+        }
+        
+    };
+    
+    //Encostando no teto e caindo
+    if place_meeting(x,y - 1 ,obj_chao){
+        velv = 0.5;
+    }
+};
+
+movimentacao_horizontal = function () {
+    
+    velh = (right - left) * spd; 
+    
+};
+
+//Estados do player
+estado_idle   = new estado();
+estado_run    = new estado();
+estado_jump   = new estado();
+estado_parado = new estado();
+
+
+#region IDLE
+
+estado_idle.inicia = function () {
+    sprite_index = spr_player;
+    image_index = 0;
+};
+
+estado_idle.roda = function ()
+{
+    
+    movimentacao_vertical();
+    movimentacao_horizontal();
+    ajusta_xscale();
+    
+    if jump and coyote_timer > 0 {
+        velv = -forca_pulo;
+        troca_estado(estado_jump);
+        efeito_squash(.4,1.7);
+    };
+    
+    if velh != 0 {
+        troca_estado(estado_run);
+    }
+    
+    
+    
+     
+};
+
+estado_idle.finaliza = function () {
+    
+};
+
+#endregion
+
+#region  RUN
+
+estado_run.inicia = function () {
+    //sprite_index = spr_player_caminhando
+    image_index = 0;
+};
+
+estado_run.roda = function (){
+   
+    movimentacao_horizontal();
+    movimentacao_vertical();
+    ajusta_xscale();
+    
+    
+  //ficando parado
+    if velh == 0 {
+        troca_estado(estado_idle); 
+    };
+    
+    if jump and coyote_timer > 0 {
+        velv = -forca_pulo;
+        troca_estado(estado_jump);
+        //aplicando o efeito
+        efeito_squash(.4,1.7);
+    };
+    
+};
+
+estado_run.finaliza = function () {
+       
+};
+
+#endregion
+
+#region JUMP
+
+estado_jump.inicia = function () {
+    //sprite_index = spr_player_jump;
+    image_index = 0;
+};
+
+estado_jump.roda = function (){
+    
+    movimentacao_vertical(); 
+    movimentacao_horizontal();
+    ajusta_xscale();
+    
+    if chao {
+        troca_estado(estado_idle);
+        //aplicando o efeito
+        efeito_squash(1.4,0.7);
+    };
+    
+    if image_index > image_number - 1 {
+        image_index = image_number - 1;
+    };
+    
+    //fazendo o player nao ficar grudado em cima
+    if place_meeting(x,y-1,colisor){
+        velv += 0.5;
+    }
+    
+};
+
+estado_jump.finaliza = function () {
+    
+};
+
+
+estado_parado.inicia = function () {
+    
+}
+
+estado_parado.roda = function () {
+    
+    velh = 0; 
+    
+}
+
+estado_parado.finaliza = function () {
+    
+    
+};
+
+
+//Colocando o estado para rodar
+inicia_estado(estado_idle);
