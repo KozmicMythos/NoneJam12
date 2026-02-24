@@ -32,5 +32,5 @@
     "path":"sprites/spr_check_escada/spr_check_escada.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

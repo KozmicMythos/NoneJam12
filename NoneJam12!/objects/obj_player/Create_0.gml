@@ -20,7 +20,7 @@ colisor      = [lay_col,obj_chao,obj_check_escada];
 inicia_efeito_squash();
 
 //timer para checar se o player pode pular ou nao
-coyote_total_timer = 10;
+coyote_total_timer = 12;
 coyote_timer       = coyote_total_timer;
 ajuda_pulo         = false;
 
@@ -108,7 +108,9 @@ checa_chao = function () {
         coyote_timer = coyote_total_timer;
         ajuda_pulo = true;
     }else{
-        if coyote_timer > 0 coyote_timer--;
+        if coyote_timer > 0 {
+            coyote_timer--;
+        }
     };
     
 };
@@ -212,11 +214,12 @@ sobe_escada = function () {
 }
 
 //Estados do player
-estado_idle   = new estado();
-estado_run    = new estado();
-estado_jump   = new estado();
-estado_parado = new estado();
-estado_ladder = new estado();
+estado_idle          = new estado();
+estado_run           = new estado();
+estado_jump          = new estado();
+estado_parado        = new estado();
+estado_ladder        = new estado();
+estado_saindo_portal = new estado();
 
 
 #region IDLE
@@ -292,7 +295,7 @@ estado_run.roda = function (){
         efeito_squash(.4,1.7);
     };
     
-    if !chao {
+    if !chao and coyote_timer < 0 {
         troca_estado(estado_jump);
     };
     
@@ -341,7 +344,8 @@ estado_jump.roda = function (){
     };
     
     if !place_meeting(x,y,obj_escada){ 
-        colisor  = [obj_chao,lay_col,obj_check_escada];
+        //colisor  = [obj_chao,lay_col,obj_check_escada]; 
+        colisor      = [lay_col,obj_chao,obj_check_escada]; 
     }
     
     
@@ -363,6 +367,32 @@ estado_parado.roda = function () {
 }
 
 estado_parado.finaliza = function () {
+    
+    
+};
+
+//PORTAL
+
+estado_saindo_portal.inicia = function () {
+    sprite_index = spr_player_saindo_portal;    
+}
+
+estado_saindo_portal.roda = function () {
+    
+    movimentacao_vertical();
+    velh = 0; 
+    
+    if chao {
+        troca_estado(estado_idle);
+        //Falando para o portal que eu posso fechar ele
+        with(obj_portal){
+            pode_fechar = true;
+        }
+    }
+    
+}
+
+estado_saindo_portal.finaliza = function () {
     
     
 };
@@ -438,4 +468,4 @@ estado_ladder.finaliza = function () {
 
 
 //Colocando o estado para rodar
-inicia_estado(estado_idle);
+inicia_estado(estado_saindo_portal);

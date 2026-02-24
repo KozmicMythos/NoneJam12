@@ -17,7 +17,7 @@ function save_game()
         };
     }
 
-    /* Salvando o estado do mapa
+    // Salvando o estado do mapa
     with (obj_map)
     {
         dados.mapa = {
@@ -25,7 +25,7 @@ function save_game()
             lins: lins,
             descoberto: descoberto
         };
-    }*/
+    }
 
     // Transformando a estrutura em string e salvando
     var _string = json_stringify(dados);
@@ -55,13 +55,13 @@ function load_game()
         //_inst.can_grab         = _struct.can_grab;
         //_inst.itens_coletados  = _struct.itens_coletados;
 
-        /*Carregando os dados do mapa
+        //Carregando os dados do mapa
         var _mapa = _dados.mapa;
         with (obj_map)
         {
             cols       = _mapa.cols;
             lins       = _mapa.lins;
             descoberto = _mapa.descoberto;
-        }*/
+        }
     }
 }
