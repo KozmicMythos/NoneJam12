@@ -14,7 +14,11 @@ dir = 1;
 escada = 0;
 //Colisores
 lay_col  = layer_tilemap_get_id("Map");
-colisor      = [lay_col,obj_chao,obj_check_escada,obj_plataforma];
+
+colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma];
+
+colisor = colisor_base;
+//colisor      = [lay_col,obj_chao,obj_check_escada,obj_plataforma];
 
 //Checando para saber se o player está em uma plataforma
 plataforma_atual = noone;
@@ -32,9 +36,6 @@ left  = 0;
 right = 0;
 jump  = 0;
 
-
-
-
 //FUNÇÕES CÂMERA
 cam_moving = false;
 cam_target_x = 0;
@@ -43,40 +44,45 @@ cam_target_y = 0;
 
 #region COLISORES PLATAFORMA
 
-// Colisor padrão (com plataforma)
-colisor_padrao = [lay_col, obj_chao, obj_check_escada, obj_plataforma];
+//// Colisor padrão (com plataforma)
+//colisor_padrao = [lay_col, obj_chao, obj_check_escada, obj_plataforma];
+//
+//// Colisor do frame quando estiver em cima da plataforma (sem plataforma)
+//colisor_sem_plat = [lay_col, obj_chao];
+//
+//// Colisor usado no frame atual
+//colisor_frame = colisor_padrao;
 
-// Colisor do frame quando estiver em cima da plataforma (sem plataforma)
-colisor_sem_plat = [lay_col, obj_chao, obj_check_escada];
 
-// Colisor usado no frame atual
-colisor_frame = colisor_padrao;
-
-
-// resolve plataforma + escolhe colisor do frame
 resolve_plataforma_e_colisor = function () {
 
+    // volta para o colisor normal todo frame
+    colisor = colisor_base;
     plataforma_atual = noone;
-    colisor_frame = colisor_padrao;
 
-    // só considera plataforma se estiver caindo/parado
+    // se estiver na escada → não colide com check_escada
+    if (estado_atual == estado_ladder) {
+        colisor = [lay_col, obj_chao, obj_plataforma];
+        return;
+    }
+
+    // verifica plataforma
     var p = instance_place(x, y + 1, obj_plataforma);
 
     if (p != noone && velv >= 0) {
 
-        // cola exatamente no topo
+        // cola no topo
         y += (p.bbox_top - bbox_bottom);
 
-        // carrega com a plataforma (serve pra subir e descer)
+        // carrega com a plataforma
         y += p.velv;
 
-        // se estava caindo, zera pra não tremer
         if (velv > 0) velv = 0;
 
         plataforma_atual = p;
 
-        // enquanto estiver em cima, NÃO colida com a plataforma
-        colisor_frame = colisor_sem_plat;
+        // enquanto estiver em cima → NÃO colide com a plataforma
+        colisor = [lay_col, obj_chao, obj_check_escada];
     }
 };
 
@@ -141,7 +147,7 @@ comandos = function  (){
 //colisao com o chao
 checa_chao = function () {
     
-    chao = place_meeting(x, y + 1, colisor);  
+    chao = place_meeting(x, y + 1, colisor_base);  
     
     //se eu estiver no chao e não estiver na escada, faço meu Y desenhar corretamente na tela
     //and !escada 
@@ -390,13 +396,13 @@ estado_jump.roda = function (){
     
     
     //fazendo o player nao ficar grudado em cima
-    if place_meeting(x,y-1,colisor){
+    if place_meeting(x,y-1,colisor_base){
         velv += 0.1;
     };
     
     if !place_meeting(x,y,obj_escada){ 
         //colisor  = [obj_chao,lay_col,obj_check_escada]; 
-        colisor      = [lay_col,obj_chao,obj_check_escada,obj_plataforma]; 
+        colisor      = colisor_base//[lay_col,obj_chao,obj_check_escada,obj_plataforma]; 
     }
     
     
@@ -535,11 +541,11 @@ estado_ladder.finaliza = function () {
     //colisor  = [obj_chao,obj_plataforma,lay_col,obj_check_escada,lay_col_2];
     
     if !place_meeting(x,y,obj_escada){ 
-        colisor  = [obj_chao,lay_col,obj_check_escada,obj_plataforma];
+        colisor = [obj_chao,lay_col,obj_plataforma,obj_check_escada];
     }
     else
     {    
-        colisor  = [obj_chao,lay_col,obj_plataforma];
+        colisor = [obj_chao,lay_col,obj_plataforma];
     }
 }
 
