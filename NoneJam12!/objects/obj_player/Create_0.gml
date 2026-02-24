@@ -220,6 +220,7 @@ estado_jump          = new estado();
 estado_parado        = new estado();
 estado_ladder        = new estado();
 estado_saindo_portal = new estado();
+estado_texto         = new estado();
 
 
 #region IDLE
@@ -370,6 +371,32 @@ estado_parado.finaliza = function () {
     
     
 };
+
+//ESTADO TEXTO
+
+estado_texto.inicia = function(){
+    
+    pode_mexer = false;
+    if velh != 0 velh = 0;
+    if velv != 0 velv = 0;
+    image_speed = 0; 
+         
+}
+
+estado_texto.roda = function () {
+    
+    var butaum = keyboard_check(vk_enter) || gamepad_button_check(0,gp_face1);
+    
+    if butaum { 
+        troca_estado(estado_idle);
+    }
+    
+}
+
+estado_texto.finaliza = function () {
+    pode_mexer = true;
+    image_speed = 1;
+}
 
 //PORTAL
 
