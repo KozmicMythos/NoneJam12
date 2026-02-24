@@ -14,7 +14,10 @@ dir = 1;
 escada = 0;
 //Colisores
 lay_col  = layer_tilemap_get_id("Map");
-colisor      = [lay_col,obj_chao,obj_check_escada];
+colisor      = [lay_col,obj_chao,obj_check_escada,obj_plataforma];
+
+//Checando para saber se o player está em uma plataforma
+plataforma_atual = noone;
 
 //Iniciando o efeito squash
 inicia_efeito_squash();
@@ -36,6 +39,48 @@ jump  = 0;
 cam_moving = false;
 cam_target_x = 0;
 cam_target_y = 0;
+
+
+#region COLISORES PLATAFORMA
+
+// Colisor padrão (com plataforma)
+colisor_padrao = [lay_col, obj_chao, obj_check_escada, obj_plataforma];
+
+// Colisor do frame quando estiver em cima da plataforma (sem plataforma)
+colisor_sem_plat = [lay_col, obj_chao, obj_check_escada];
+
+// Colisor usado no frame atual
+colisor_frame = colisor_padrao;
+
+
+// resolve plataforma + escolhe colisor do frame
+resolve_plataforma_e_colisor = function () {
+
+    plataforma_atual = noone;
+    colisor_frame = colisor_padrao;
+
+    // só considera plataforma se estiver caindo/parado
+    var p = instance_place(x, y + 1, obj_plataforma);
+
+    if (p != noone && velv >= 0) {
+
+        // cola exatamente no topo
+        y += (p.bbox_top - bbox_bottom);
+
+        // carrega com a plataforma (serve pra subir e descer)
+        y += p.velv;
+
+        // se estava caindo, zera pra não tremer
+        if (velv > 0) velv = 0;
+
+        plataforma_atual = p;
+
+        // enquanto estiver em cima, NÃO colida com a plataforma
+        colisor_frame = colisor_sem_plat;
+    }
+};
+
+#endregion
 
 //CAMERA
 move_camera = function () {
@@ -197,8 +242,7 @@ sobe_escada = function () {
     //verificando se o check colisor é um colisor ou nao
     
     var escada_atual = instance_place(x,y,obj_escada);
-    var check_escada_atual = instance_place(x,y + 1,obj_check_escada);
-    
+    var check_escada_atual = instance_place(x,y + 1,obj_check_escada); 
 
     //Se eu posso subir na escada então eu subo//quando encostar no chao voltar a poder subir
     if pode_subir {
@@ -210,8 +254,8 @@ sobe_escada = function () {
         }
     }
     
-    
 }
+
 
 //Estados do player
 estado_idle          = new estado();
@@ -239,6 +283,8 @@ estado_idle.roda = function ()
     verifica_escada();
     
     if jump and coyote_timer > 0 {
+        //removendo a plataforma
+        plataforma_atual = noone;
         velv = -forca_pulo;
         troca_estado(estado_jump);
         efeito_squash(.4,1.7);
@@ -290,6 +336,8 @@ estado_run.roda = function (){
     };
     
     if jump and coyote_timer > 0 {
+        //removendo a plataforma
+        plataforma_atual = noone;
         velv = -forca_pulo;
         troca_estado(estado_jump);
         //aplicando o efeito
@@ -331,6 +379,8 @@ estado_jump.roda = function (){
     movimentacao_horizontal();
     ajusta_xscale();
      
+    
+    
     if chao {
         troca_estado(estado_idle);
         //aplicando o efeito
@@ -346,7 +396,7 @@ estado_jump.roda = function (){
     
     if !place_meeting(x,y,obj_escada){ 
         //colisor  = [obj_chao,lay_col,obj_check_escada]; 
-        colisor      = [lay_col,obj_chao,obj_check_escada]; 
+        colisor      = [lay_col,obj_chao,obj_check_escada,obj_plataforma]; 
     }
     
     
@@ -432,7 +482,7 @@ estado_ladder.inicia = function () {
     velv = 0; 
     sprite_index = spr_player_ladder;
     
-    colisor  = [obj_chao,lay_col];
+    colisor  = [obj_chao,lay_col,obj_plataforma];
     
 }
 
@@ -485,11 +535,11 @@ estado_ladder.finaliza = function () {
     //colisor  = [obj_chao,obj_plataforma,lay_col,obj_check_escada,lay_col_2];
     
     if !place_meeting(x,y,obj_escada){ 
-        colisor  = [obj_chao,lay_col,obj_check_escada];
+        colisor  = [obj_chao,lay_col,obj_check_escada,obj_plataforma];
     }
     else
     {    
-        colisor  = [obj_chao,lay_col];
+        colisor  = [obj_chao,lay_col,obj_plataforma];
     }
 }
 
