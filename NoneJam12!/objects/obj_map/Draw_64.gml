@@ -46,32 +46,67 @@ if mostra_mapa {
     }
     
     
-    
-    // Desenhar a nave (ou outros objetos) no minimapa
-    if instance_exists(obj_player) {
-        // Posição da nave no mapa
-        var nave_x = obj_player.x;
-        var nave_y = obj_player.y;
-    
-        // Qual tela a nave está?
-        var tela_nave_x = nave_x div tela_size;
-        var tela_nave_y = nave_y div tela_altura;
-    
-        if (tela_nave_x >= 0 && tela_nave_x < cols && tela_nave_y >= 0 && tela_nave_y < lins)
-        {
-            if descoberto[tela_nave_x][tela_nave_y] {
+    //desenhando a escada
+     // Lista de objetos e seus sprites correspondentes
+            var obj_list = [
+                [obj_escada, spr_escada],
+                [obj_save_station, spr_save_station],
+                [obj_placa,spr_placa]
+            ];
+            
+            // Pegando os valores do minimapa antes do 'with'
+            var _escala    = escala;
+            var _offset_x  = offset_x;
+            var _offset_y  = offset_y;
+            var _tela_size = tela_size;
+            
+            // Loop nos objetos
+            for (var i = 0; i < array_length(obj_list); i++) {
+                var obj_ref   = obj_list[i][0]; // o objeto
+                var spr_ref   = obj_list[i][1]; // o sprite correspondente
                 
-                var nx = nave_x * escala - offset_x;
-                var ny = nave_y * escala - offset_y;
-        
-                
-                var _lado = obj_player.dir;
-                draw_set_color(c_blue); 
-                draw_sprite_ext( spr_player, image_index, nx, ny, image_xscale * escala * _lado, image_yscale * escala, image_angle, image_blend, image_alpha );
-             }
-           } 
-         }
+                with (obj_ref) {
+                    var tx = x div _tela_size;
+                    var ty = y div _tela_size;
+            
+                    if (other.descoberto[tx][ty]) {
+                        var mx = x * _escala - _offset_x;
+                        var my = y * _escala - _offset_y;
+            
+                        //draw_sprite(spr_ref, image_index, mx , my ); 
+                        draw_sprite_ext(spr_ref, image_index, mx , my ,image_xscale * _escala,image_yscale * _escala,image_angle,image_blend,image_alpha); 
+                    }
+                }
+            } 
+               // Desenhando o player no minimapa
+               if instance_exists(obj_player) {
+                   // Posição da nave no mapa
+                   var nave_x = obj_player.x;
+                   var nave_y = obj_player.y;
+               
+                   // Qual tela a nave está?
+                   var tela_nave_x = nave_x div tela_size;
+                   var tela_nave_y = nave_y div tela_altura;
+               
+                   if (tela_nave_x >= 0 && tela_nave_x < cols && tela_nave_y >= 0 && tela_nave_y < lins)
+                   {
+                       if descoberto[tela_nave_x][tela_nave_y] {
+                           
+                           var nx = nave_x * escala - offset_x;
+                           var ny = nave_y * escala - offset_y;
+                   
+                           
+                           var _lado = obj_player.dir;
+                           draw_set_color(c_blue); 
+                           draw_sprite_ext( spr_player, image_index, nx, ny, image_xscale * escala * _lado, image_yscale * escala, image_angle, image_blend, image_alpha );
+                           draw_set_color(c_white)
+                        }
+                      } 
+                    } 
+           
      }
+
+
     /*
     // Desenhar a nave (ou outros objetos) no minimapa
     if instance_exists(obj_plantas) {

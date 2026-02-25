@@ -40,9 +40,10 @@ jump  = 0;
 dash  = 0;
 
 
-//check dos poderes
-can_dash = true;
-can_double_jump = true;
+//check dos poderes e mapa
+can_dash = false;
+can_double_jump = false;
+
 
 //qtd de pulos duplos
 max_pulo_qtd = 2;

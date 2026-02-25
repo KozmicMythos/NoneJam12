@@ -8,3 +8,5 @@ var hit_esc = place_meeting(x, y-1, obj_check_escada);
 
 //draw_set_font(fnt_texto)
 draw_text_transformed(x,y-20,plataforma_atual,0.5,0.5,0);
+draw_text(x,y-30,global.mapa);
+

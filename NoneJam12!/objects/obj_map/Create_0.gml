@@ -1,3 +1,4 @@
+global.mapa = false;
 // Tamanho de cada tile real
 tile_size = 16;
 

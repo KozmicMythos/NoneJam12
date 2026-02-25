@@ -41,8 +41,8 @@ portal_aberto.roda = function (){
     if joga_player <= 0 {
         if !instance_exists(obj_player){
             
-            //var _player = instance_create_depth(x,y,depth-1,obj_player);
-            var _player = instance_create_layer(x,y,"player",obj_player)
+            var _player = instance_create_depth(x,y,depth-1,obj_player);
+            //var _player = instance_create_layer(x,y,"player",obj_player)
         }
     };
     

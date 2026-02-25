@@ -1,7 +1,8 @@
+//checando pra ver se o player tem mapa
 
 // Alternar o mapa com Enter
 var mapa_controle = (keyboard_check_pressed(ord("M"))) || gamepad_button_check_pressed(0,gp_select) || gamepad_button_check_pressed(0,gp_start);
-if mapa_controle  {
+if mapa_controle && global.mapa {
     mostra_mapa = !mostra_mapa;
     escala = 1;
 }
