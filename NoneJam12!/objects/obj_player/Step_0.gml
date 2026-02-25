@@ -4,6 +4,7 @@ checa_chao();
 comandos();
 roda_estado();
 verifica_dash();
+pegando_ovo_timer();
 
 resolve_plataforma_e_colisor();
 //movimentacao horizontal

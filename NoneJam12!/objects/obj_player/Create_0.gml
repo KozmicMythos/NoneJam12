@@ -20,7 +20,7 @@ escada = 0;
 lay_col  = layer_tilemap_get_id("Map");
 
 //colisor de morte
-colisores_morte = [obj_bola_verde,obj_inimigo_gosma];
+colisores_morte = [obj_bola_verde,obj_inimigo_gosma,obj_estaca];
 
 colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma];
 
@@ -53,7 +53,7 @@ can_double_jump = true;
 
 
 //qtd de pulos duplos
-max_pulo_qtd = 1;
+max_pulo_qtd = 2;
 pulo_qtd = max_pulo_qtd;
 
 //checando se pode ou nao pular depois que saiu da escada
@@ -78,6 +78,33 @@ qtd_dash = max_dash;
 cam_moving = false;
 cam_target_x = 0;
 cam_target_y = 0;
+
+
+//PARTE COLETAVEIS
+ovos_totais        = 5;
+ovos_coletados     = 0;
+//checando se peguei o ovo
+pegou_ovo          = false;
+max_timer_pega_ovo = 300;
+timer_pega_ovo     = max_timer_pega_ovo;
+hud_y              = 800;
+
+pegando_ovo_timer = function () {
+    
+    if pegou_ovo {
+        
+        //diminuindo o timer
+        timer_pega_ovo--;
+        
+        //Quando chegar em zero
+        if timer_pega_ovo <= 0 {
+            pegou_ovo = false;
+            timer_pega_ovo = max_timer_pega_ovo;
+        }
+        
+    }
+    
+}
 
 
 #region COLISORES PLATAFORMA
@@ -162,7 +189,7 @@ comandos = function  (){
         up    = keyboard_check(ord("W")) || keyboard_check(vk_up);
         down  = keyboard_check(ord("S")) || keyboard_check(vk_down);
         grab  = keyboard_check(ord("E"))
-        dash  = keyboard_check(ord("K")) || keyboard_check(ord("K"));
+        dash  = keyboard_check_pressed(ord("K")) || keyboard_check_pressed(ord("X"));
         
         // Gamepad Analógico
         var lx = gamepad_axis_value(0, gp_axislh); // Eixo horizontal esquerdo
@@ -273,6 +300,7 @@ movimentacao_vertical = function () {
         //coyote_timer = coyote_total_timer;
         if velv != 0  {
             velv = 0;
+            pulo_qtd = max_pulo_qtd;
         }
         
     };
@@ -377,7 +405,7 @@ estado_morte          = new estado();
 estado_idle.inicia = function () {
     sprite_index = spr_player;
     image_index = 0;
-    pulo_qtd = max_pulo_qtd;
+    
 };
 
 estado_idle.roda = function ()
@@ -672,8 +700,8 @@ estado_ladder.finaliza = function () {
     grav = 0.2; 
     y = round(y);
     image_speed = 1; 
-     //se eu estou na escada 
-    //colisor  = [obj_chao,obj_plataforma,lay_col,obj_check_escada,lay_col_2];
+    //fazendo com que ao sair da escada ele não pule
+    pulo_qtd = 0;
     
     if !place_meeting(x,y,obj_escada){ 
         colisor = [obj_chao,lay_col,obj_plataforma,obj_check_escada];
