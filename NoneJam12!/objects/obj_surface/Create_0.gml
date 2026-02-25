@@ -2,7 +2,7 @@
 surf = surface_create(room_width,room_height);
 
 //variavel q controla a iluminação geral
-iluminacao = .2;
+iluminacao = .5;
 
 
 
@@ -57,6 +57,17 @@ sistema_iluminacao = function(){
             // Efeito de piscar
             //var piscar = abs(sin(current_time / 500.0));
             draw_sprite_ext(spr_luz,image_index,x,y,image_xscale , image_yscale ,image_angle,image_blend,1); 
+        }
+
+        with(obj_save_station){
+            // Efeito de piscar
+            var piscar = abs(sin(current_time / 500.0));
+            draw_sprite_ext(spr_luz,image_index,x,y - sprite_height + 10,image_xscale , image_yscale ,image_angle,image_blend,piscar); 
+        }
+        with(obj_placa){
+            // Efeito de piscar
+            var piscar = abs(sin(current_time / 500.0));
+            draw_sprite_ext(spr_luz,image_index,x,y - sprite_height + 10,image_xscale , image_yscale ,image_angle,image_blend,image_alpha); 
         }
 
 		

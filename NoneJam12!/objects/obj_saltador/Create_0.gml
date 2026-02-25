@@ -1,0 +1,1 @@
+ativa_animacao = false;

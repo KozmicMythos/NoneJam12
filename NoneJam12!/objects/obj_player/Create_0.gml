@@ -35,6 +35,23 @@ ajuda_pulo         = false;
 left  = 0;
 right = 0;
 jump  = 0;
+dash  = 0;
+
+//check dos poderes
+can_dash = true;
+
+//Dash variaveis
+vel_dash = 6;
+dash_timer = 10;
+tempo_dash = dash_timer;
+dei_dash = false;
+//Agora impedindo com que o player dê dash o tempo todo
+dash_temporizador_max = 50;
+dash_temporizador = dash_temporizador_max;
+pode_dash = true;
+//quantidade de dash
+max_dash = 1;
+qtd_dash = max_dash;
 
 //FUNÇÕES CÂMERA
 cam_moving = false;
@@ -114,13 +131,16 @@ move_camera = function () {
 //movimentacao
 comandos = function  (){
      
+    check_poderes();
+    
     if pode_mexer {
         // Teclado (WASD + setas)
         right = keyboard_check(ord("D")) || keyboard_check(vk_right);
         left  = keyboard_check(ord("A")) || keyboard_check(vk_left);
-        up    = keyboard_check(ord("W")) //|| keyboard_check(vk_up);
-        down  = keyboard_check(ord("S")) //|| keyboard_check(vk_down);
+        up    = keyboard_check(ord("W")) || keyboard_check(vk_up);
+        down  = keyboard_check(ord("S")) || keyboard_check(vk_down);
         grab  = keyboard_check(ord("E"))
+        dash  = keyboard_check(ord("K")) || keyboard_check(ord("K"));
         
         // Gamepad Analógico
         var lx = gamepad_axis_value(0, gp_axislh); // Eixo horizontal esquerdo
@@ -143,6 +163,12 @@ comandos = function  (){
     };
  
 };
+
+check_poderes = function () {
+    
+    if can_dash dash = keyboard_check_pressed(ord("K")) || gamepad_button_check_pressed(0, gp_face3); else dash = noone;
+    
+}
 
 //colisao com o chao
 checa_chao = function () {
@@ -260,6 +286,39 @@ sobe_escada = function () {
         }
     }
     
+};
+
+verifica_dash = function () {
+    //momento em que eu apertei dash
+    if pode_dash == false {
+        dash_temporizador--;
+    }
+    
+    if dash_temporizador  < 0 {
+        pode_dash = true;
+        dash_temporizador = dash_temporizador_max;
+    }  
+}
+
+//efeito para pular o cogumelo
+pula_saltador = function (){
+    
+    var coguma = instance_place(x,y + 2 ,obj_saltador);
+    var caindo = velv > 0;
+    
+    //se eu pisar em cima do cogumelo
+    //var music = choose(snd_pulo,snd_pulo_2,snd_pulo_3)
+    //Se o cogumelo estiver abaixo de mim e SE eu estiver caindo
+    if coguma and caindo{  
+        var limite = max_velv + .4;
+        velv = -limite;
+      //  audio_play_sound(music,0,0); 
+        with(coguma){
+            image_index = 0; 
+            ativa_animacao = true;
+        }
+    }
+    
 }
 
 
@@ -271,7 +330,7 @@ estado_parado        = new estado();
 estado_ladder        = new estado();
 estado_saindo_portal = new estado();
 estado_texto         = new estado();
-
+estado_dash          = new estado();
 
 #region IDLE
 
@@ -295,6 +354,12 @@ estado_idle.roda = function ()
         troca_estado(estado_jump);
         efeito_squash(.4,1.7);
     };
+    
+    //DASH    
+    //se eu apertar dash
+    if dash && pode_dash {
+        troca_estado(estado_dash);
+    }
     
     if velh != 0 {
         troca_estado(estado_run);
@@ -333,6 +398,7 @@ estado_run.roda = function (){
     movimentacao_horizontal();
     movimentacao_vertical();
     ajusta_xscale();
+    pula_saltador();
     
     
     
@@ -353,6 +419,11 @@ estado_run.roda = function (){
     if !chao and coyote_timer < 0 {
         troca_estado(estado_jump);
     };
+    
+    //se eu apertar dash     
+    if dash && pode_dash {
+        troca_estado(estado_dash);
+    }
     
     //SE apertar para baixo e estiver encostando no CHECK escada
     //então vou um pixel para baixo e meu estado é escada
@@ -384,6 +455,7 @@ estado_jump.roda = function (){
     movimentacao_vertical(); 
     movimentacao_horizontal();
     ajusta_xscale();
+    pula_saltador()
      
     
     
@@ -392,6 +464,11 @@ estado_jump.roda = function (){
         //aplicando o efeito
         efeito_squash(1.4,0.7);
     };
+    
+    //se eu apertar dash     
+    if dash && pode_dash {
+        troca_estado(estado_dash);
+    }
     
     
     
@@ -547,7 +624,88 @@ estado_ladder.finaliza = function () {
     {    
         colisor = [obj_chao,lay_col,obj_plataforma];
     }
+};
+
+estado_dash.inicia = function (){ 
+    velv = 0;
+    image_index = 0;
+    //falando que eu iniciei o dash
+    pode_dash = false; 
+    //audio_play_sound(snd_dash,0,0);    
 }
+
+estado_dash.roda = function () {
+    
+    comandos();
+    
+    //dando um efeito maneiro
+    efeito_squash(1.4,0.5);
+     //timer_pode_dash--;  
+	sprite_index = spr_player; 
+	//criando meu rastro
+	if (tempo_dash % 3 == 0){
+		//obj_screenshake.shake = 4;
+		var rastro = instance_create_depth(x,y,depth + 1,obj_rastro);
+		//definindo as informações do rastro
+		rastro.sprite_index = sprite_index;
+		rastro.image_index = image_index;
+		rastro.image_speed = 0;
+		rastro.image_xscale = xscale * dir;
+        
+	} 
+	tempo_dash --;
+	
+	//velv = 0;	
+	if !dei_dash {
+           var _dir = keyboard_check(ord("D")) || right;
+           var _esq = keyboard_check(ord("A")) || left;
+           
+           var h = _dir - _esq; // 1 direita, -1 esquerda, 0 nada
+           
+           if (h != 0) {
+               velh = h * vel_dash;
+               dir = h; // atualiza direção do personagem
+           } else {
+               velh = dir * vel_dash; // dash na última direção
+           }
+        /*
+			//var _cima  = keyboard_check(ord("W"));
+			var _dir   = keyboard_check(ord("D"));
+			var _esq   = keyboard_check(ord("A"));
+			//var _baixo = keyboard_check(ord("S"));			
+	
+			var direcao = point_direction(0,0,(_dir - _esq),0); 
+        
+            velh = lengthdir_x(vel_dash,direcao);
+                
+            //se eu não der uma direção ele vai para o lado que está apontado
+            if !direcao{
+                velh = xscale * dir;
+            }		
+         */
+			//velv = lengthdir_y(vel_dash,direcao);
+			
+			
+			//avisando que dei o dash
+			dei_dash = true; 
+		}
+	
+		if tempo_dash <= 0 {
+			tempo_dash = dash_timer;
+			dei_dash = false;
+            troca_estado(estado_idle); 
+		} 
+    
+    //fazendo com que se eu atacadr enquanto estiver dando dash, no final da animação vou pro ataque
+    //pode_morrer();
+}
+
+estado_dash.finaliza = function () {
+    
+    velh = 0;
+    
+}
+
 
 
 //Colocando o estado para rodar

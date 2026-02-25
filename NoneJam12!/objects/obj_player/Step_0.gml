@@ -3,6 +3,7 @@ move_camera();
 checa_chao();
 comandos();
 roda_estado();
+verifica_dash();
 
 resolve_plataforma_e_colisor();
 //movimentacao horizontal
