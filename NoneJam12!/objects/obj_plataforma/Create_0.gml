@@ -20,8 +20,8 @@ teto = 0;
 //colisao com o chao
 checa_chao = function () {
     
-    chao = place_meeting(x, y + 1, colisor);  
-    teto = place_meeting(x,y-1,colisor);
+    chao = place_meeting(x, y + 10, colisor);  
+    teto = place_meeting(x,y-25,colisor);
     //se eu estiver no chao e não estiver na escada, faço meu Y desenhar corretamente na tela
     //and !escada 
     if chao  { 

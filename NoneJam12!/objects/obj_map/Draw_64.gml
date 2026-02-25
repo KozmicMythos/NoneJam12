@@ -1,5 +1,7 @@
+
 //NOVO MAPA
 if mostra_mapa {
+    /*
     var mini_tile = tile_size * escala;
     var mini_tela = tela_altura * escala;
     
@@ -8,6 +10,28 @@ if mostra_mapa {
     var tela_central_y = obj_player.y div tela_altura ;
     var offset_x = tela_central_x * mini_tela - display_get_gui_width() / 2 + mini_tela / 2;
     var offset_y = tela_central_y * mini_tela - display_get_gui_height() / 2 + mini_tela / 2;
+    */
+    var mini_tile = tile_size * escala;
+
+    // tamanho da tela (320x180) no minimapa, em pixels
+    var mini_screen_w = tela_size   * escala;
+    var mini_screen_h = tela_altura * escala;
+    
+    // qual tela o player está
+    var tela_central_x = floor(obj_player.x / tela_size);
+    var tela_central_y = floor(obj_player.y / tela_altura);
+    
+    // centro da GUI
+    var gui_cx = display_get_gui_width()  * 0.5;
+    var gui_cy = display_get_gui_height() * 0.5;
+    
+    // centro da tela atual, em coordenadas do "mundo do minimapa"
+    var screen_center_x = (tela_central_x * mini_screen_w) + (mini_screen_w * 0.5);
+    var screen_center_y = (tela_central_y * mini_screen_h) + (mini_screen_h * 0.5);
+    
+    // offset final (tudo que você desenhar em "mundo minimapa" - offset = GUI)
+    var offset_x = screen_center_x - gui_cx;
+    var offset_y = screen_center_y - gui_cy;
     
     //fazendo o mapa ficar escuro // Criando um quadrado para deixar um efeito escuro
     draw_set_alpha(0.7)
@@ -59,15 +83,17 @@ if mostra_mapa {
             var _offset_x  = offset_x;
             var _offset_y  = offset_y;
             var _tela_size = tela_size;
+            var _tela_altura = tela_altura;
             
             // Loop nos objetos
             for (var i = 0; i < array_length(obj_list); i++) {
                 var obj_ref   = obj_list[i][0]; // o objeto
                 var spr_ref   = obj_list[i][1]; // o sprite correspondente
                 
+                
                 with (obj_ref) {
                     var tx = x div _tela_size;
-                    var ty = y div _tela_size;
+                    var ty = y div _tela_altura;
             
                     if (other.descoberto[tx][ty]) {
                         var mx = x * _escala - _offset_x;

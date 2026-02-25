@@ -17,6 +17,10 @@ retorna_squash();
 
 if keyboard_check(vk_escape) game_restart()
 if keyboard_check(vk_enter) save_game()
-if keyboard_check(vk_backspace) load_game()
-if keyboard_check(ord("O")) global.mapa = true;
+if keyboard_check(vk_backspace) load_game();
+if keyboard_check(ord("O")) {
+    with (obj_map) {
+    	tem_mapa = true;
+    }
+}
     

@@ -21,6 +21,7 @@ function save_game()
     with (obj_map)
     {
         dados.mapa = {
+            tem_mapa : tem_mapa,
             cols: cols,
             lins: lins,
             descoberto: descoberto
@@ -59,6 +60,7 @@ function load_game()
         var _mapa = _dados.mapa;
         with (obj_map)
         {
+            tem_mapa   = _mapa.tem_mapa;
             cols       = _mapa.cols;
             lins       = _mapa.lins;
             descoberto = _mapa.descoberto;

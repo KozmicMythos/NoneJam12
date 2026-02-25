@@ -41,12 +41,12 @@ dash  = 0;
 
 
 //check dos poderes e mapa
-can_dash = false;
-can_double_jump = false;
+can_dash = true;
+can_double_jump = true;
 
 
 //qtd de pulos duplos
-max_pulo_qtd = 2;
+max_pulo_qtd = 1;
 pulo_qtd = max_pulo_qtd;
 
 
