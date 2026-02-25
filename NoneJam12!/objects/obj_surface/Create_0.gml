@@ -2,7 +2,7 @@
 surf = surface_create(room_width,room_height);
 
 //variavel q controla a iluminação geral
-iluminacao = 0.2;
+iluminacao = 0.4;
 
 
 

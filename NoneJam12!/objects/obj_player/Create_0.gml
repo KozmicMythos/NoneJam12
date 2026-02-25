@@ -49,6 +49,10 @@ can_double_jump = true;
 max_pulo_qtd = 1;
 pulo_qtd = max_pulo_qtd;
 
+//checando se pode ou nao pular depois que saiu da escada
+check_pula_escada = 30;
+pula_escada_timer = check_pula_escada;
+
 
 //Dash variaveis
 vel_dash = 6;
@@ -200,7 +204,7 @@ checa_chao = function () {
             coyote_timer--;
         }
     };
-    
+     
 };
 
 checa_escada = function (){
@@ -361,7 +365,7 @@ estado_idle.roda = function ()
     ajusta_xscale();
     verifica_escada();
     
-    if jump and coyote_timer > 0 and pulo_qtd > 0{
+    if jump and coyote_timer > 0{
         pulo_qtd--;
         //removendo a plataforma
         plataforma_atual = noone;
@@ -422,7 +426,7 @@ estado_run.roda = function (){
         troca_estado(estado_idle); 
     };
     
-    if jump and coyote_timer > 0 and pulo_qtd > 0{
+    if jump and coyote_timer > 0 {
         pulo_qtd--;
         //removendo a plataforma
         plataforma_atual = noone;
@@ -473,7 +477,7 @@ estado_jump.roda = function (){
     movimentacao_horizontal();
     ajusta_xscale();
     pula_saltador();
-    
+    sobe_escada();
     
     if chao {
         troca_estado(estado_idle);
@@ -620,7 +624,8 @@ estado_ladder.roda = function () {
     if !place_meeting(x,y,obj_escada){ 
         troca_estado(estado_idle);        
     }
-    //
+    
+
     //se eu pular eu pulo? rs    
     if jump {
         colisor  = [obj_chao,lay_col,obj_plataforma];

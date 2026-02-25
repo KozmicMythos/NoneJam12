@@ -68,7 +68,7 @@ estado_descendo.inicia = function (){
 estado_descendo.roda = function () {
     
     //descendo
-    velv = 0.35;
+    velv = 0.4;
     
     if chao {
         troca_estado(estado_subindo);

@@ -1,0 +1,1 @@
+mudando_iluminacao();
