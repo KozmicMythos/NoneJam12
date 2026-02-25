@@ -10,10 +10,17 @@ forca_pulo   = 3;
 //colocando a direção
 dir = 1;
 
+//timer de morte do player
+max_timer_morte = 60;
+timer_morte = max_timer_morte;
+
 //checando a escada
 escada = 0;
 //Colisores
 lay_col  = layer_tilemap_get_id("Map");
+
+//colisor de morte
+colisores_morte = [obj_bola_verde,obj_inimigo_gosma];
 
 colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma];
 
@@ -336,7 +343,22 @@ pula_saltador = function (){
         }
     }
     
+};
+
+//matando o player
+mata_player = function () {
+    
+    var botao_do_capeta = keyboard_check(ord("J"));
+    var _hurt = place_meeting(x,y,colisores_morte);
+    
+    
+    if _hurt or botao_do_capeta {   
+        //dir = choose(1,-1);   
+         troca_estado(estado_morte);
+    } 
+    
 }
+
 
 
 //Estados do player
@@ -348,6 +370,7 @@ estado_ladder        = new estado();
 estado_saindo_portal = new estado();
 estado_texto         = new estado();
 estado_dash          = new estado();
+estado_morte          = new estado();
 
 #region IDLE
 
@@ -364,6 +387,7 @@ estado_idle.roda = function ()
     movimentacao_horizontal();
     ajusta_xscale();
     verifica_escada();
+    mata_player();
     
     if jump and coyote_timer > 0{
         pulo_qtd--;
@@ -418,7 +442,7 @@ estado_run.roda = function (){
     movimentacao_vertical();
     ajusta_xscale();
     pula_saltador();
-    
+    mata_player();
     
     
   //ficando parado
@@ -478,6 +502,7 @@ estado_jump.roda = function (){
     ajusta_xscale();
     pula_saltador();
     sobe_escada();
+    mata_player();
     
     if chao {
         troca_estado(estado_idle);
@@ -590,11 +615,11 @@ estado_saindo_portal.finaliza = function () {
 //iniciando a escada
 estado_ladder.inicia = function () {
      
+    
     grav = 0;
     velh = 0;
     velv = 0; 
-    sprite_index = spr_player_ladder;
-    
+    sprite_index = spr_player_ladder; 
     colisor  = [obj_chao,lay_col,obj_plataforma];
     //colisor = colisor_sem_check;
     
@@ -602,11 +627,11 @@ estado_ladder.inicia = function () {
 
 estado_ladder.roda = function () {
     
-    comandos(); 
-    
+    comandos();  
     //dando velocidade para cima e para baixo
     velv = (down - up) * spd; 
     image_speed = sign(velv);
+    mata_player();
     
     ////escada
     //var _escada = place_meeting(x,y,escada);
@@ -701,22 +726,6 @@ estado_dash.roda = function () {
            } else {
                velh = dir * vel_dash; // dash na última direção
            }
-        /*
-			//var _cima  = keyboard_check(ord("W"));
-			var _dir   = keyboard_check(ord("D"));
-			var _esq   = keyboard_check(ord("A"));
-			//var _baixo = keyboard_check(ord("S"));			
-	
-			var direcao = point_direction(0,0,(_dir - _esq),0); 
-        
-            velh = lengthdir_x(vel_dash,direcao);
-                
-            //se eu não der uma direção ele vai para o lado que está apontado
-            if !direcao{
-                velh = xscale * dir;
-            }		
-         */
-			//velv = lengthdir_y(vel_dash,direcao);
 			
 			
 			//avisando que dei o dash
@@ -736,6 +745,35 @@ estado_dash.roda = function () {
 estado_dash.finaliza = function () {
     
     velh = 0;
+    
+};
+
+//Começando o estado de morte do player
+estado_morte.inicia = function () {
+    
+    sprite_index = spr_player_death;
+    image_index = 0;
+    screenshake(12);
+    
+    
+}
+
+estado_morte.roda = function () {
+    
+    movimentacao_vertical();
+    
+    if velh != 0 velh = 0 ;
+  
+   
+    if image_index > image_number - 1 {
+        load_game();
+    }
+        
+    
+}
+
+estado_morte.finaliza = function (){
+    
     
 }
 

@@ -1,6 +1,5 @@
 draw_sprite_ext(sprite_index,image_index,x,y,xscale * dir,yscale,image_angle,image_blend,image_alpha);
 
-draw_text(x,y-10,pulo_qtd);
 var hit_tile = place_meeting(x, y-1, lay_col);
 var hit_chao = place_meeting(x, y-1, obj_chao);
 var hit_plat = place_meeting(x, y-1, obj_plataforma);
