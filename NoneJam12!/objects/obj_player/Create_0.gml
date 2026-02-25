@@ -17,6 +17,8 @@ lay_col  = layer_tilemap_get_id("Map");
 
 colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma];
 
+colisor_sem_check = [lay_col, obj_chao, obj_plataforma];
+
 colisor = colisor_base;
 //colisor      = [lay_col,obj_chao,obj_check_escada,obj_plataforma];
 
@@ -37,8 +39,15 @@ right = 0;
 jump  = 0;
 dash  = 0;
 
+
 //check dos poderes
 can_dash = true;
+can_double_jump = true;
+
+//qtd de pulos duplos
+max_pulo_qtd = 2;
+pulo_qtd = max_pulo_qtd;
+
 
 //Dash variaveis
 vel_dash = 6;
@@ -73,33 +82,34 @@ cam_target_y = 0;
 
 resolve_plataforma_e_colisor = function () {
 
-    // volta para o colisor normal todo frame
-    colisor = colisor_base;
+    // não reseta colisor aqui (deixa sua escada/check em paz)
     plataforma_atual = noone;
 
-    // se estiver na escada → não colide com check_escada
-    if (estado_atual == estado_ladder) {
-        colisor = [lay_col, obj_chao, obj_plataforma];
-        return;
-    }
-
-    // verifica plataforma
+    // detecta plataforma só quando estiver caindo/parado
     var p = instance_place(x, y + 1, obj_plataforma);
 
     if (p != noone && velv >= 0) {
 
-        // cola no topo
+        // cola no topo (isso evita "entrar" na plataforma)
         y += (p.bbox_top - bbox_bottom);
 
-        // carrega com a plataforma
+        // carrega o movimento dela (subindo e descendo)
         y += p.velv;
-
+        
+        // se estava caindo, zera pra não tremer
         if (velv > 0) velv = 0;
 
         plataforma_atual = p;
+    }
+};
 
-        // enquanto estiver em cima → NÃO colide com a plataforma
-        colisor = [lay_col, obj_chao, obj_check_escada];
+atualiza_colisor_para_movimento = function () {
+    // por padrão
+    colisor = colisor_base;
+
+    // se estou na escada OU subindo (pulo), sem check
+    if (estado_atual == estado_ladder || velv < 0) {
+        colisor = colisor_sem_check;
     }
 };
 
@@ -173,11 +183,11 @@ check_poderes = function () {
 //colisao com o chao
 checa_chao = function () {
     
-    chao = place_meeting(x, y + 1, colisor_base);  
+    chao = place_meeting(x, y + 1, colisor);  
     
     //se eu estiver no chao e não estiver na escada, faço meu Y desenhar corretamente na tela
     //and !escada 
-    if chao  { 
+    if chao { 
         y = round(y);
     };
     
@@ -214,6 +224,8 @@ verifica_escada = function () {
         //se eu nao estiver colidindo e apertar cima ou baixo
         sobe_escada();
     }
+    
+    
     
 }
 
@@ -337,6 +349,7 @@ estado_dash          = new estado();
 estado_idle.inicia = function () {
     sprite_index = spr_player;
     image_index = 0;
+    pulo_qtd = max_pulo_qtd;
 };
 
 estado_idle.roda = function ()
@@ -347,7 +360,8 @@ estado_idle.roda = function ()
     ajusta_xscale();
     verifica_escada();
     
-    if jump and coyote_timer > 0 {
+    if jump and coyote_timer > 0 and pulo_qtd > 0{
+        pulo_qtd--;
         //removendo a plataforma
         plataforma_atual = noone;
         velv = -forca_pulo;
@@ -407,7 +421,8 @@ estado_run.roda = function (){
         troca_estado(estado_idle); 
     };
     
-    if jump and coyote_timer > 0 {
+    if jump and coyote_timer > 0 and pulo_qtd > 0{
+        pulo_qtd--;
         //removendo a plataforma
         plataforma_atual = noone;
         velv = -forca_pulo;
@@ -447,6 +462,7 @@ estado_jump.inicia = function () {
     
     sprite_index = spr_player_jump;
     image_index = 0;
+    //colisor = colisor_sem_check;
 };
 
 estado_jump.roda = function (){
@@ -455,8 +471,7 @@ estado_jump.roda = function (){
     movimentacao_vertical(); 
     movimentacao_horizontal();
     ajusta_xscale();
-    pula_saltador()
-     
+    pula_saltador();
     
     
     if chao {
@@ -480,7 +495,17 @@ estado_jump.roda = function (){
     if !place_meeting(x,y,obj_escada){ 
         //colisor  = [obj_chao,lay_col,obj_check_escada]; 
         colisor      = colisor_base//[lay_col,obj_chao,obj_check_escada,obj_plataforma]; 
-    }
+    };
+    
+    //DOUBLE JUMP
+    if jump and pulo_qtd > 0{
+        pulo_qtd--;
+        //removendo a plataforma
+        plataforma_atual = noone;
+        velv = -forca_pulo;
+        troca_estado(estado_jump);
+        efeito_squash(.4,1.7);
+    };
     
     
 };
@@ -522,7 +547,7 @@ estado_texto.roda = function () {
     
     if butaum { 
         troca_estado(estado_idle);
-    }
+    };
     
 }
 
@@ -566,6 +591,7 @@ estado_ladder.inicia = function () {
     sprite_index = spr_player_ladder;
     
     colisor  = [obj_chao,lay_col,obj_plataforma];
+    //colisor = colisor_sem_check;
     
 }
 
@@ -596,8 +622,9 @@ estado_ladder.roda = function () {
     //
     //se eu pular eu pulo? rs    
     if jump {
+        colisor  = [obj_chao,lay_col,obj_plataforma];
         //se eu pular minha gravidade volta ao normal
-        velv -= 2;
+        velv -= 3;
         troca_estado(estado_jump);   
     }
     

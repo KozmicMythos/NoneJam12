@@ -1,4 +1,4 @@
-//criando o colisor escada
+
 cria_colisor = function () {
     
     var colisor = place_meeting(x,y-1,obj_check_escada);
