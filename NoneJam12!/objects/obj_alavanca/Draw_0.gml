@@ -1,0 +1,2 @@
+
+desenha_efeito_squash();

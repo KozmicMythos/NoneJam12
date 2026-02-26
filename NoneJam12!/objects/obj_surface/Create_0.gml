@@ -80,6 +80,15 @@ sistema_iluminacao = function(){
             var _tam = random_range(0.9,1)
             draw_sprite_ext(spr_luz,image_index,x,y + sprite_height - 3,(image_xscale * 0.5) * _tam, (image_yscale * 0.5) * _tam ,image_angle,image_blend,image_alpha); 
         }
+         
+        gpu_set_blendmode(bm_add)
+        with(obj_bichinho_luz){
+            // Efeito de piscar
+        //  var piscar = abs(sin(current_time / 500.0));
+            var _tamanho = 0.2
+            var _pisca = random_range(0.1,0.2);
+            draw_sprite_ext(spr_luz,image_index,x,y ,image_xscale * _tamanho, image_yscale * _tamanho,image_angle,c_blue,0.2); 
+        }
 
 		
 		#endregion

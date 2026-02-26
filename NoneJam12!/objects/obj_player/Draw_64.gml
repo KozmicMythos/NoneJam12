@@ -21,3 +21,17 @@ if (hud_y < 1000) {
     draw_text(_xx - 6,      hud_y, "/");
     draw_text(_xx - 15,     hud_y, ovos_coletados);
 }
+
+
+/*
+var _y_inicio = 1000;
+
+if jogo_salvo {
+    
+    if _yy <= _y_inicio{
+        _y_inicio--;
+    } 
+    draw_sprite_ext(spr_save_sprite,image_index, _xx,_y_inicio,_escala,_escala,0,image_blend,image_alpha);
+    
+    
+}

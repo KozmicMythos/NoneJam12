@@ -27,6 +27,10 @@ estado_salvando.inicia = function (){
     if pode_point{
         pode_point = false;
         save_game();
+        
+        with(obj_player){
+            jogo_salvo = true;
+        }
     }
     
 }

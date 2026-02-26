@@ -118,8 +118,6 @@ function load_game()
         if (global.ovo3) with (obj_ovo_3) instance_destroy();
         if (global.ovo4) with (obj_ovo_4) instance_destroy();
         if (global.ovo5) with (obj_ovo_5) instance_destroy();
-            
-        
         
 
 

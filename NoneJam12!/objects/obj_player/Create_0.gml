@@ -22,7 +22,7 @@ lay_col  = layer_tilemap_get_id("Map");
 //colisor de morte
 colisores_morte = [obj_bola_verde,obj_inimigo_gosma,obj_estaca];
 
-colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma];
+colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma,obj_porta];
 
 colisor_sem_check = [lay_col, obj_chao, obj_plataforma];
 
@@ -88,6 +88,9 @@ pegou_ovo          = false;
 max_timer_pega_ovo = 300;
 timer_pega_ovo     = max_timer_pega_ovo;
 hud_y              = 800;
+
+//avisando que o jogo foi salvo
+jogo_salvo = false;
 
 pegando_ovo_timer = function () {
     

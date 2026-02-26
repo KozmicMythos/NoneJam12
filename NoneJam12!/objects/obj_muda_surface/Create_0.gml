@@ -11,9 +11,10 @@ mudando_iluminacao = function () {
         
           //se o player estiver dentro
         if (col != noone) {  
+            var _luz = luz;
             if (instance_exists(obj_surface)) {
                 with (obj_surface) {
-                    iluminacao = lerp(iluminacao, 1.2, 0.1);
+                    iluminacao = lerp(iluminacao, _luz, 0.1);
                 }
             } 
         } else {
