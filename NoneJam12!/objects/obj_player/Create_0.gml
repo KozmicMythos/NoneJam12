@@ -48,8 +48,8 @@ dash  = 0;
 
 
 //check dos poderes e mapa
-can_dash = true;
-can_double_jump = true;
+can_dash = false;
+can_double_jump = false;
 
 
 //qtd de pulos duplos
@@ -189,7 +189,10 @@ comandos = function  (){
         up    = keyboard_check(ord("W")) || keyboard_check(vk_up);
         down  = keyboard_check(ord("S")) || keyboard_check(vk_down);
         grab  = keyboard_check(ord("E"))
-        dash  = keyboard_check_pressed(ord("K")) || keyboard_check_pressed(ord("X"));
+        
+        if can_dash {
+            dash  = keyboard_check_pressed(ord("K")) || keyboard_check_pressed(ord("X"));
+        }
         
         // Gamepad Analógico
         var lx = gamepad_axis_value(0, gp_axislh); // Eixo horizontal esquerdo
@@ -390,14 +393,14 @@ mata_player = function () {
 
 
 //Estados do player
-estado_idle          = new estado();
-estado_run           = new estado();
-estado_jump          = new estado();
-estado_parado        = new estado();
-estado_ladder        = new estado();
-estado_saindo_portal = new estado();
-estado_texto         = new estado();
-estado_dash          = new estado();
+estado_idle           = new estado();
+estado_run            = new estado();
+estado_jump           = new estado();
+estado_parado         = new estado();
+estado_ladder         = new estado();
+estado_saindo_portal  = new estado();
+estado_texto          = new estado();
+estado_dash           = new estado();
 estado_morte          = new estado();
 
 #region IDLE
@@ -556,7 +559,7 @@ estado_jump.roda = function (){
     };
     
     //DOUBLE JUMP
-    if jump and pulo_qtd > 0{
+    if jump and pulo_qtd > 0 and can_double_jump{
         pulo_qtd--;
         //removendo a plataforma
         plataforma_atual = noone;
@@ -805,6 +808,18 @@ estado_morte.finaliza = function (){
     
 }
 
+
+//verifica poderes
+check_poderes = function () {
+    
+    if (global.tem_dash){
+        can_dash = true;
+    }
+    if (global.tem_double_jump){
+        can_double_jump = true;
+    }
+    
+}
 
 
 //Colocando o estado para rodar
