@@ -15,8 +15,7 @@ estados_da_porta = function () {
             
             image_index = 1;
             
-            vspeed = -0.7;
-            
+            vspeed = -0.7; 
             
             break;
     	
