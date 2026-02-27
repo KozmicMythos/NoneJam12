@@ -1,15 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"obj_estaca",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"obj_ovos_bonus",
+  "eventList":[],
   "managed":true,
-  "name":"obj_estaca",
+  "name":"obj_ovos_bonus",
   "overriddenProperties":[],
   "parent":{
-    "name":"Morte Mapa",
-    "path":"folders/2 Objetos/Inimigos/Morte Mapa.yy",
+    "name":"Ovos",
+    "path":"folders/2 Objetos/Ovos.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -30,8 +28,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_estaca",
-    "path":"sprites/spr_estaca/spr_estaca.yy",
+    "name":"spr_ovos_bonus",
+    "path":"sprites/spr_ovos_bonus/spr_ovos_bonus.yy",
   },
   "spriteMaskId":null,
   "visible":true,

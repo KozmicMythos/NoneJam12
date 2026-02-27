@@ -1,4 +1,4 @@
-max_timer = irandom_range(270,300);
+max_timer = irandom_range(230,270);
 tempo = max_timer;
 tamanho = 2;
 espaco = 2;

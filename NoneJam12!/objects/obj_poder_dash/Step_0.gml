@@ -1,4 +1,3 @@
-// pega o player (usa place_meeting pra não falhar por ser "um ponto")
 if (!pegou && place_meeting(x, y, obj_player)) {
     pegou = true;
     mostra_texto = true;

@@ -19,10 +19,12 @@ escada = 0;
 //Colisores
 lay_col  = layer_tilemap_get_id("Map");
 
+mapa_verde = layer_tilemap_get_id("mapa_verde");
+
 //colisor de morte
 colisores_morte = [obj_bola_verde,obj_inimigo_gosma,obj_estaca];
 
-colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma,obj_porta];
+colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma,mapa_verde,obj_porta];
 
 colisor_sem_check = [lay_col, obj_chao, obj_plataforma];
 
@@ -48,8 +50,8 @@ dash  = 0;
 
 
 //check dos poderes e mapa
-can_dash = false;
-can_double_jump = false;
+can_dash = true;
+can_double_jump = true;
 
 
 //qtd de pulos duplos

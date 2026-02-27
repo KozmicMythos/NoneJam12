@@ -1,0 +1,43 @@
+{
+  "$GMTileSet":"v1",
+  "%Name":"tl_mapa_mapa_verde",
+  "autoTileSets":[
+    {"$GMAutoTileSet":"","%Name":"autotile_1","closed_edge":false,"name":"autotile_1","resourceType":"GMAutoTileSet","resourceVersion":"2.0","tiles":[
+        51,53,55,57,59,61,63,65,151,153,155,157,159,161,163,165,251,253,255,257,259,261,263,265,351,353,355,
+        357,359,361,363,365,451,453,455,457,459,461,463,465,551,553,555,557,559,561,563,
+      ],},
+  ],
+  "macroPageTiles":{
+    "SerialiseHeight":0,
+    "SerialiseWidth":0,
+    "TileSerialiseData":[],
+  },
+  "name":"tl_mapa_mapa_verde",
+  "out_columns":41,
+  "out_tilehborder":2,
+  "out_tilevborder":2,
+  "parent":{
+    "name":"6 Tileset",
+    "path":"folders/6 Tileset.yy",
+  },
+  "resourceType":"GMTileSet",
+  "resourceVersion":"2.0",
+  "spriteId":{
+    "name":"spr_mapa_verde",
+    "path":"sprites/spr_mapa_verde/spr_mapa_verde.yy",
+  },
+  "spriteNoExport":false,
+  "textureGroupId":{
+    "name":"Default",
+    "path":"texturegroups/Default",
+  },
+  "tileAnimationFrames":[],
+  "tileAnimationSpeed":15.0,
+  "tileHeight":16,
+  "tilehsep":0,
+  "tilevsep":0,
+  "tileWidth":16,
+  "tilexoff":0,
+  "tileyoff":0,
+  "tile_count":1700,
+}

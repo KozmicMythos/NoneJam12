@@ -1,6 +1,6 @@
 {
   "$GMSprite":"v2",
-  "%Name":"spr_morte_mapa",
+  "%Name":"spr_estaca",
   "bboxMode":2,
   "bbox_bottom":15,
   "bbox_left":0,
@@ -13,6 +13,8 @@
   "For3D":false,
   "frames":[
     {"$GMSpriteFrame":"v1","%Name":"12ac688c-8428-4c8b-88a5-99bed7407552","name":"12ac688c-8428-4c8b-88a5-99bed7407552","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"70574763-913d-45e4-ba91-d60291fbed4e","name":"70574763-913d-45e4-ba91-d60291fbed4e","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"e3df7c9b-684a-45cf-a095-a5c9328c11cb","name":"e3df7c9b-684a-45cf-a095-a5c9328c11cb","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -21,7 +23,7 @@
   "layers":[
     {"$GMImageLayer":"","%Name":"f74519e9-2474-4fee-a6ea-8695377ce6be","blendMode":0,"displayName":"default","isLocked":false,"name":"f74519e9-2474-4fee-a6ea-8695377ce6be","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"spr_morte_mapa",
+  "name":"spr_estaca",
   "nineSlice":null,
   "origin":7,
   "parent":{
@@ -33,7 +35,7 @@
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"v1",
-    "%Name":"spr_morte_mapa",
+    "%Name":"spr_estaca",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -49,7 +51,7 @@
     },
     "eventStubScript":null,
     "eventToFunction":{},
-    "length":1.0,
+    "length":3.0,
     "lockOrigin":false,
     "moments":{
       "$KeyframeStore<MomentsEventKeyframe>":"",
@@ -57,9 +59,9 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"spr_morte_mapa",
+    "name":"spr_estaca",
     "playback":1,
-    "playbackSpeed":30.0,
+    "playbackSpeed":0.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",
@@ -69,8 +71,14 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"12ac688c-8428-4c8b-88a5-99bed7407552","path":"sprites/spr_morte_mapa/spr_morte_mapa.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"12ac688c-8428-4c8b-88a5-99bed7407552","path":"sprites/spr_estaca/spr_estaca.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"d8c3f376-ec37-4c60-ba7e-9bd6cdb8d41d","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"70574763-913d-45e4-ba91-d60291fbed4e","path":"sprites/spr_estaca/spr_estaca.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"ac978772-fa93-478d-88a9-1dbf8a203263","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e3df7c9b-684a-45cf-a095-a5c9328c11cb","path":"sprites/spr_estaca/spr_estaca.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"1a961300-378d-4573-945e-8d0d713adb54","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
