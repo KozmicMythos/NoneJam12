@@ -1,6 +1,6 @@
 {
   "$GMObject":"",
-  "%Name":"obj_poder_jump",
+  "%Name":"obj_poder_dash_1",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
@@ -8,7 +8,7 @@
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_poder_jump",
+  "name":"obj_poder_dash_1",
   "overriddenProperties":[],
   "parent":{
     "name":"Poderes",
@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_poder_jump",
-    "path":"sprites/spr_poder_jump/spr_poder_jump.yy",
+    "name":"spr_poder_dash",
+    "path":"sprites/spr_poder_dash/spr_poder_dash.yy",
   },
   "spriteMaskId":null,
   "visible":true,

@@ -12,19 +12,19 @@ ativando_alavanca = function () {
            
            image_speed = 0;
             
-              if keyboard_check(vk_enter){
+              if keyboard_check(vk_enter) and place_meeting(x,y,obj_player){
                 efeito_squash(1.2,0.8);
                 estado_alavanca = "ativando";
                 //escolhendo a porta para abrir
                 with(obj_porta){
                     
-                    if porta_id == "porta_1" {
-                        
-                        estado_porta = "aberta";
-                        
-                        
+                    //ARRUMAR ISSO DPS
+                    if porta_id == "porta_1" { 
+                        estado_porta = "aberta"; 
                     }
-                           
+                    if porta_id == "porta_2"{
+                        estado_porta = "aberta"; 
+                    }
                 }
             }
            

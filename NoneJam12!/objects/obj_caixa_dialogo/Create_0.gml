@@ -1,4 +1,5 @@
 fonte = fnt_texto;
+fonte_pixel = fnt_pixel;
 
 //TEXTO
 texto = "Texto de teste";

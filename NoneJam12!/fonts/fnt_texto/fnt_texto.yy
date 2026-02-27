@@ -1384,8 +1384,8 @@
   "maintainGms1Font":false,
   "name":"fnt_texto",
   "parent":{
-    "name":"fonts",
-    "path":"folders/fonts.yy",
+    "name":"Fonts",
+    "path":"folders/Fonts.yy",
   },
   "pointRounding":0,
   "ranges":[

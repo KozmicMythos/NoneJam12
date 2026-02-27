@@ -60,6 +60,12 @@ pulo_qtd = max_pulo_qtd;
 check_pula_escada = 30;
 pula_escada_timer = check_pula_escada;
 
+//PARTE DO ESTADO TEXTO
+mostra_pressiona_botao = false;
+//timer para mostrar o botao
+max_timer_mostra_botao = 80;
+timer_mostra_botao = max_timer_mostra_botao;
+
 
 //Dash variaveis
 vel_dash = 6;
@@ -602,22 +608,55 @@ estado_texto.inicia = function(){
     if velh != 0 velh = 0;
     if velv != 0 velv = 0;
     image_speed = 0; 
+     
          
 }
 
 estado_texto.roda = function () {
     
+    timer_mostra_botao--;
+    
+    if timer_mostra_botao <= 0 {
+        //dizendo pra ele que pode desenhar o pressiona botao
+        mostra_pressiona_botao = true;   
+    }
+    
     var butaum = keyboard_check(vk_enter) || gamepad_button_check(0,gp_face1);
     
     if butaum { 
+        
+        with(obj_poder_jump){
+            //checando se eu peguei, aí posso sumir
+            if pegou {
+                pode_sumir = true;
+            }
+        }
+        with(obj_poder_dash){
+            //SE eu peguei então eu posso sumir
+            if pegou {
+                pode_sumir = true;
+            }
+        }
+        
+        
+        
+         
+        timer_mostra_botao = max_timer_mostra_botao;
+        mostra_pressiona_botao = false;
         troca_estado(estado_idle);
     };
+    
+   
+    
+    
     
 }
 
 estado_texto.finaliza = function () {
+    
     pode_mexer = true;
     image_speed = 1;
+    
 }
 
 //PORTAL
@@ -814,7 +853,7 @@ estado_morte.finaliza = function (){
 
 //verifica poderes
 check_poderes = function () {
-    
+    //checando se o player tem os poderes
     if (global.tem_dash){
         can_dash = true;
     }

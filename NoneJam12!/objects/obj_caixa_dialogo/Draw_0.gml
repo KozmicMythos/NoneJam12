@@ -3,13 +3,13 @@ draw_self();
 if !desenha_texto exit;
 
 //Alinhando o texto
-draw_set_font(fonte);
+draw_set_font(fonte_pixel);
 
 draw_set_halign(0);
 draw_set_valign(0);
 //Fazendo o texto voltar metade da sprite
-var _marg_x = 3;
-var _marg_y = 1;
+var _marg_x = 2;
+var _marg_y = 2;
 var _x = x - sprite_width / 2 +_marg_x;
 var _y = y + _marg_y;
 var _larg = (sprite_width * 10) - (_marg_x - 20);
