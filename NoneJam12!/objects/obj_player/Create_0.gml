@@ -10,6 +10,10 @@ forca_pulo   = 3;
 //colocando a direção
 dir = 1;
 
+//verificando os ovos opcionais
+//global.ovinhos = 0;
+if (!variable_global_exists("ovinhos")) global.ovinhos = 0;
+
 //timer de morte do player
 max_timer_morte = 60;
 timer_morte = max_timer_morte;
@@ -22,7 +26,7 @@ lay_col  = layer_tilemap_get_id("Map");
 mapa_verde = layer_tilemap_get_id("mapa_verde");
 
 //colisor de morte
-colisores_morte = [obj_bola_verde,obj_inimigo_gosma,obj_estaca];
+colisores_morte = [obj_bola_verde,obj_inimigo_gosma,obj_estaca,obj_olho_dano];
 
 colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma,mapa_verde,obj_porta];
 
@@ -99,6 +103,7 @@ hud_y              = 800;
 
 //avisando que o jogo foi salvo
 jogo_salvo = false;
+
 
 pegando_ovo_timer = function () {
     
@@ -229,7 +234,7 @@ comandos = function  (){
 
 check_poderes = function () {
     
-    if can_dash dash = keyboard_check_pressed(ord("K")) || gamepad_button_check_pressed(0, gp_face3); else dash = noone;
+   // if can_dash dash = keyboard_check_pressed(ord("K")) || gamepad_button_check_pressed(0, gp_face3); else dash = noone;
     
 }
 
@@ -246,7 +251,8 @@ checa_chao = function () {
     
     if chao { 
         coyote_timer = coyote_total_timer;
-        ajuda_pulo = true;
+        ajuda_pulo = true; 
+        
     }else{
         if coyote_timer > 0 {
             coyote_timer--;
@@ -401,6 +407,34 @@ mata_player = function () {
     
 }
 
+//pegando os ovinhos menores
+pegando_ovinhos = function (){
+    
+    var _ovinhos = instance_place(x,y,obj_ovos_bonus)
+    
+    if _ovinhos {
+        
+        global.ovinhos++;
+        with(_ovinhos){
+            instance_destroy();
+        }
+        
+    }
+    
+};
+
+//checando para ver se entrei no portal final
+entra_portal = function (){
+    
+    var _portal = instance_place(x,y,obj_portal_final);
+    if _portal{ 
+         
+        troca_estado(estado_portal);
+    }
+    
+}
+
+
 
 
 //Estados do player
@@ -413,6 +447,7 @@ estado_saindo_portal  = new estado();
 estado_texto          = new estado();
 estado_dash           = new estado();
 estado_morte          = new estado();
+estado_portal         = new estado();
 
 #region IDLE
 
@@ -429,6 +464,7 @@ estado_idle.roda = function ()
     movimentacao_horizontal();
     ajusta_xscale();
     verifica_escada();
+    entra_portal();
     mata_player();
     
     if jump and coyote_timer > 0{
@@ -484,6 +520,7 @@ estado_run.roda = function (){
     movimentacao_vertical();
     ajusta_xscale();
     pula_saltador();
+    entra_portal();
     mata_player();
     
     
@@ -544,6 +581,7 @@ estado_jump.roda = function (){
     ajusta_xscale();
     pula_saltador();
     sobe_escada();
+    entra_portal();
     mata_player();
     
     if chao {
@@ -748,7 +786,7 @@ estado_ladder.finaliza = function () {
     y = round(y);
     image_speed = 1; 
     //fazendo com que ao sair da escada ele não pule
-    pulo_qtd = 0;
+    //pulo_qtd = 0;
     
     if !place_meeting(x,y,obj_escada){ 
         colisor = [obj_chao,lay_col,obj_plataforma,obj_check_escada];
@@ -770,6 +808,7 @@ estado_dash.inicia = function (){
 estado_dash.roda = function () {
     
     comandos();
+    entra_portal();
     
     //dando um efeito maneiro
     efeito_squash(1.4,0.5);
@@ -822,6 +861,35 @@ estado_dash.finaliza = function () {
     velh = 0;
     
 };
+
+estado_portal.inicia = function () {
+    image_index = 0;
+    sprite_index = spr_player_portal_final;
+    
+}
+
+estado_portal.roda = function () {
+    
+    velh = 0;
+    velv = 0;
+    var _xx = obj_portal_final.x;
+    var _yy = obj_portal_final.y;
+    
+    x = lerp(x,_xx,0.1);
+    y = lerp(y,_yy,0.1);
+    
+    image_angle-= 10;
+   
+    if image_index > image_number - 1 {
+        room_goto(room_cutscene_final);
+    }
+    
+}
+
+estado_portal.finaliza = function () {
+    
+    
+}
 
 //Começando o estado de morte do player
 estado_morte.inicia = function () {

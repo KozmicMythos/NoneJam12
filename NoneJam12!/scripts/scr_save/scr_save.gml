@@ -4,7 +4,8 @@ function save_game()
         jogador: undefined,
         mapa: undefined,
         ovos: undefined,
-        poderes: undefined
+        poderes: undefined,
+        ovinhos: undefined
     };
 
     // Salvando os dados do jogador
@@ -13,9 +14,11 @@ function save_game()
         dados.jogador = {
             object: object_get_name(object_index),
             x: x,
-            y: y
+            y: y,
+            //ovinhos: global.ovinhos,
             //can_dash: can_dash,
-            //can_grab: can_grab
+            
+            ////: can_grab
         };
     }
 

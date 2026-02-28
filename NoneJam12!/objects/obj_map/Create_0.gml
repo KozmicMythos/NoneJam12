@@ -1,4 +1,4 @@
-tem_mapa = false;
+tem_mapa = true;
 // Tamanho de cada tile real
 tile_size = 16;
 

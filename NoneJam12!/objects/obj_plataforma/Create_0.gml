@@ -9,7 +9,7 @@ grav         = .2;
 spd          = 1;
 
 //velocidade que a plataforma sobe
-vel_plataforma = 0.5;
+vel_plataforma = 0.9;
 
 //Colisores
 lay_col  = layer_tilemap_get_id("Map");

@@ -3,6 +3,8 @@ pode_point = true;
 
 //checando para ver se já salvei nesse salve ou não
 save = false;
+
+mostra_save = false;
 //checando a distancia do player
 player_check_save = function () {
     
@@ -40,9 +42,13 @@ estado_salvando.roda = function () {
     
      
     if image_index > image_number - 1 {
+        
         image_index = 0;
+        mostra_save = false;
         troca_estado(estado_parado);
     }
+    
+    
     
     
     
@@ -59,6 +65,7 @@ estado_salvando.finaliza = function (){
 estado_parado.inicia = function () {
     
     image_speed = 0;
+    
 }
 
 estado_parado.roda = function () {
@@ -68,6 +75,7 @@ estado_parado.roda = function () {
     var _player_dist = distance_to_object(_player) > 35
     //se o player passar por mim eu salvo    
     if _player and pode_point {
+        mostra_save = true;
         troca_estado(estado_salvando);
     }
     

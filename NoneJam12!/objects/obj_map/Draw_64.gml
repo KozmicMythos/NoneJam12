@@ -1,6 +1,7 @@
 
 //NOVO MAPA
 if mostra_mapa {
+    
     /*
     var mini_tile = tile_size * escala;
     var mini_tela = tela_altura * escala;
@@ -38,8 +39,11 @@ if mostra_mapa {
     draw_set_color(c_black)
     draw_rectangle(0,0,1520,1520,false);
     draw_set_color(c_white)
-    draw_set_alpha(1)
-
+    draw_set_alpha(1);
+    
+    //pegando a metade da tela
+    image_speed = 0.05; 
+    draw_sprite_ext(spr_mapa_indicador,image_index,gui_cx,660,3,3,0,image_blend,1);
     for (var tx = 0; tx < cols; tx++) {
         for (var ty = 0; ty < lins; ty++) {
             if descoberto[tx][ty] {
@@ -129,6 +133,8 @@ if mostra_mapa {
                         }
                       } 
                     } 
+    
+        
            
      }
 

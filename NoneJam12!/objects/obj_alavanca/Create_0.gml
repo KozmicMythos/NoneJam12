@@ -18,6 +18,7 @@ ativando_alavanca = function () {
                 //escolhendo a porta para abrir
                 with(obj_porta){
                     
+                    porta_abrindo = true;
                     //ARRUMAR ISSO DPS
                     if porta_id == "porta_1" { 
                         estado_porta = "aberta"; 
