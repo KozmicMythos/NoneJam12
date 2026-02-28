@@ -47,8 +47,8 @@ caminhando = function () {
     //se escolher a esquerda ganhará velh negativo
     //irá parar quando encostar na parede
      
-    var esq = place_meeting(x-10,y,colisor) or !place_meeting(x - 10, y + 1,colisor);
-    var dir = place_meeting(x+10,y,colisor) or !place_meeting(x + 10, y + 1,colisor);
+    var esq = place_meeting(x-7,y,colisor) or !place_meeting(x - 7, y + 1,colisor);
+    var dir = place_meeting(x+7,y,colisor) or !place_meeting(x + 7, y + 1,colisor);
 
     
     switch (direcao) {
