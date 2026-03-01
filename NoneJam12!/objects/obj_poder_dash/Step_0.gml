@@ -6,6 +6,7 @@ if (!pegou && place_meeting(x, y, obj_player)) {
     var _player = instance_place(x, y, obj_player);
     if (_player != noone) {
         efeito_squash(.6,1.2)
+        audio_play_sound(snd_item,0,0);
         with (_player) {
             can_dash = true;
             global.tem_dash = true;

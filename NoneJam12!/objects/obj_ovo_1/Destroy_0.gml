@@ -4,4 +4,5 @@ with(obj_player){
 
 global.ovo1 = true;
 save_game();
+
 //peguei_ovo = true;

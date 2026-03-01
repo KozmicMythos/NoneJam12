@@ -28,7 +28,7 @@ aproxima_player = function () {
     var direc  = point_direction(x,y,obj_player.x,obj_player.y);
     
     if player < 150 { 
-        direction = direc;
+        direction = direc; 
     }
     
 }

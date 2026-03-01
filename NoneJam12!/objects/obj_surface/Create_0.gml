@@ -2,7 +2,7 @@
 surf = surface_create(room_width,room_height);
 
 //variavel q controla a iluminação geral
-iluminacao = 0.4;
+iluminacao = 0.3;
 
 
 
@@ -79,6 +79,13 @@ sistema_iluminacao = function(){
             var piscar = abs(sin(current_time / 500.0));
             var _tam = random_range(0.9,1)
             draw_sprite_ext(spr_luz,image_index,x,y + sprite_height - 3,(image_xscale * 0.5) * _tam, (image_yscale * 0.5) * _tam ,image_angle,image_blend,image_alpha); 
+        }
+        
+        with(obj_luz_vermelha){
+            // Efeito de piscar
+            var piscar = abs(sin(current_time / 500.0));
+            var _tam = random_range(0.9,1)
+            draw_sprite_ext(spr_luz_teto_vermelha,image_index,x,y ,1, 1,image_angle,image_blend,image_alpha); 
         }
          
         gpu_set_blendmode(bm_add)

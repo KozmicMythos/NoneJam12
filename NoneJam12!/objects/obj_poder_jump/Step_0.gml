@@ -6,6 +6,7 @@ if (!pegou && place_meeting(x, y, obj_player)) {
 
     var _player = instance_place(x, y, obj_player);
     if (_player != noone) {
+        audio_play_sound(snd_item,0,0);
         efeito_squash(.6,1.2)
         with (_player) {
             can_double_jump = true;

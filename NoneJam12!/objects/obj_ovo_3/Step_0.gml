@@ -1,6 +1,12 @@
 var player = instance_place(x,y,obj_player);
 
 if player { 
+    
+     if toca_musica {
+        audio_play_sound(snd_item,0,0);
+        toca_musica = false;
+        
+    }
     //fazendo o ovo subir
     sobe = true;
     

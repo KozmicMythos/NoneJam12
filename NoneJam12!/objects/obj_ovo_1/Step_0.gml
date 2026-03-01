@@ -1,9 +1,15 @@
+
 var player = instance_place(x,y,obj_player);
 
 if player { 
-    //fazendo o ovo subir
-    sobe = true;
     
+    if toca_musica {
+        audio_play_sound(snd_item,0,0);
+        toca_musica = false;
+        
+    }
+    //fazendo o ovo subir
+    sobe = true; 
     with(player){
         pegou_ovo = true;
     }
@@ -18,4 +24,3 @@ if sobe {
 if image_alpha <= 0 { 
     instance_destroy();
 } 
-

@@ -379,12 +379,12 @@ pula_saltador = function (){
     var caindo = velv > 0;
     
     //se eu pisar em cima do cogumelo
-    //var music = choose(snd_pulo,snd_pulo_2,snd_pulo_3)
+    var music = choose(snd_cogumelo,snd_cogumelo_1,snd_cogumelo_2)
     //Se o cogumelo estiver abaixo de mim e SE eu estiver caindo
     if coguma and caindo{  
         var limite = max_velv + .4;
         velv = -limite;
-      //  audio_play_sound(music,0,0); 
+        audio_play_sound(music,0,0); 
         with(coguma){
             image_index = 0; 
             ativa_animacao = true;
@@ -897,7 +897,7 @@ estado_morte.inicia = function () {
     sprite_index = spr_player_death;
     image_index = 0;
     screenshake(12);
-    
+    audio_play_sound(snd_death,0,0);
     
 }
 

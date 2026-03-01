@@ -10,3 +10,7 @@ if image_index > image_number - 1 {
 if diminui_alpha {
     image_alpha -= 0.01;
 };
+
+if image_alpha <= 0 {
+    room_goto(Room1)
+}

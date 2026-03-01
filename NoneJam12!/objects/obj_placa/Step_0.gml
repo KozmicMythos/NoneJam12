@@ -11,7 +11,7 @@ if _player {
 
     }; 
 }else{
-    //se a caixa existe
+    //se a caixa existe    
     if instance_exists(caixa_dialogo){
         //eu destruo ela
         caixa_dialogo.me_destruir = true;
