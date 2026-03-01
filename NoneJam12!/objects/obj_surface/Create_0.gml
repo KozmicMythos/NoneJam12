@@ -59,6 +59,17 @@ sistema_iluminacao = function(){
             draw_sprite_ext(spr_luz,image_index,x,y,image_xscale , image_yscale ,image_angle,image_blend,1); 
         }
 
+        with(obj_poder_jump){
+            // Efeito de piscar
+            var piscar = abs(sin(current_time / 500.0));
+            draw_sprite_ext(spr_luz,image_index,x,y,image_xscale * 2, image_yscale * 2,image_angle,image_blend,piscar); 
+        }
+        with(obj_poder_dash){
+            // Efeito de piscar
+            var piscar = abs(sin(current_time / 500.0));
+            draw_sprite_ext(spr_luz,image_index,x,y,image_xscale * 2, image_yscale * 2,image_angle,image_blend,piscar); 
+        }
+
         with(obj_save_station){
             // Efeito de piscar
             var piscar = abs(sin(current_time / 500.0));
@@ -71,8 +82,8 @@ sistema_iluminacao = function(){
         }
         with(obj_ovos){
             // Efeito de piscar
-        //  var piscar = abs(sin(current_time / 500.0));
-            draw_sprite_ext(spr_luz,image_index,x,y - sprite_height + 10,image_xscale , image_yscale ,image_angle,image_blend,image_alpha); 
+          var piscar = abs(sin(current_time / 500.0));
+            draw_sprite_ext(spr_luz,image_index,x,y - sprite_height + 10,image_xscale  * 3, image_yscale * 3,image_angle,image_blend,pisca); 
         }
         with(obj_luz_teto){
             // Efeito de piscar

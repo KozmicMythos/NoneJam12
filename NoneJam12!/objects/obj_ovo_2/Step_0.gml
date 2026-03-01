@@ -1,9 +1,13 @@
+//flutuando
+float_time += float_speed;
+y = y_base + sin(float_time) * float_amp;
+
 var player = instance_place(x,y,obj_player);
 
 if player { 
     
      if toca_musica {
-        audio_play_sound(snd_item,0,0);
+        audio_play_sound(snd_item_pickup,0,0);
         toca_musica = false;
         
     }
