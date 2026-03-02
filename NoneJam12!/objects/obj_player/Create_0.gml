@@ -571,6 +571,8 @@ estado_jump.inicia = function () {
     sprite_index = spr_player_jump;
     image_index = 0;
     //colisor = colisor_sem_check;
+    var _som = choose(snd_pulo,snd_pulo_2);
+    audio_play_sound(_som,0,0)
 };
 
 estado_jump.roda = function (){
@@ -802,7 +804,7 @@ estado_dash.inicia = function (){
     image_index = 0;
     //falando que eu iniciei o dash
     pode_dash = false; 
-    //audio_play_sound(snd_dash,0,0);    
+    audio_play_sound(snd_dash,0,0);    
 }
 
 estado_dash.roda = function () {
