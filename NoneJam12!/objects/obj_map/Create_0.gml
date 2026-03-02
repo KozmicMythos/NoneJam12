@@ -1,4 +1,8 @@
+
+//display_set_gui_size(320, 180);
+
 tem_mapa = true;
+
 // Tamanho de cada tile real
 tile_size = 16;
 
@@ -16,6 +20,7 @@ lins = room_height div tela_altura;
 // Tiles por tela
 tiles_x = tela_size div tile_size;
 tiles_y = tela_altura div tile_size;
+
 
 // Descoberta de telas
 descoberto = array_create(cols, 0);

@@ -1,2 +1,2 @@
-/// ALARM 0 - trocar room depois do delay
-room_goto(start_room);
+/// ALARM 0 - obj_menu
+room_goto(room_cut_1);

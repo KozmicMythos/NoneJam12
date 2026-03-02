@@ -1,4 +1,4 @@
-/// STEP - obj_historia
+/// STEP - obj_final_jogo
 
 timer_mostra--;
 
@@ -8,6 +8,6 @@ if (timer_mostra <= 0) {
 
 if (mostra_pressiona_botao) {
     if (keyboard_check_pressed(vk_enter)) {
-        room_goto(Room1); 
+        room_goto(room_menu);
     }
 }

@@ -1,6 +1,19 @@
-/// CREATE - MENU (usar DRAW GUI)
+/// CREATE - obj_menu (usar DRAW GUI)
+// NÃO usar display_set_gui_size aqui
 
-display_set_gui_size(320, 180);
+// base lógica do menu (foi feito pra 320x180)
+base_w = 320;
+base_h = 180;
+
+// escala automática baseada no GUI atual
+gui_scale_x = display_get_gui_width()  / base_w;
+gui_scale_y = display_get_gui_height() / base_h;
+gui_scale   = min(gui_scale_x, gui_scale_y);
+
+// ---- "aumentar na esquerda" ----
+// 1.0 = normal (igual antes em 320x180)
+// 1.25 ou 1.35 deixa maior só o menu
+menu_zoom = 1.30; // AJUSTE AQUI
 
 // estado do menu
 menu_estado = 0; // 0=principal, 1=settings
@@ -19,7 +32,7 @@ sub_scale    = 0.16;
 cor_normal = make_color_rgb(220, 220, 220);
 cor_hover  = c_white;
 
-// layout
+// layout (base 320x180)
 menu_x = 36;
 menu_y = 78;
 espacamento = 22;
@@ -28,31 +41,31 @@ espacamento = 22;
 menu_texto = ["JOGAR", "CONFIGURAÇÕES", "SAIR"];
 menu_index = 0;
 menu_hover = -1;
-menu_hover_anterior = -1; // <- pro som do hover
+menu_hover_anterior = -1;
 menu_escala = array_create(array_length(menu_texto), 1.0);
 
 // settings
 settings_texto = ["VOLUME +", "VOLUME -", "VOLTAR"];
 settings_index = 0;
 settings_hover = -1;
-settings_hover_anterior = -1; // <- pro som do hover
+settings_hover_anterior = -1;
 settings_escala = array_create(array_length(settings_texto), 1.0);
 
 // volume
 if (!variable_global_exists("volume_geral")) global.volume_geral = 1;
 audio_master_gain(global.volume_geral);
 
-// painel slide
+// painel slide (base 320x180)
 submenu_w = 140;
 submenu_vel = 0.18;
-submenu_x = 320;                   // começa fora
-submenu_in  = 320 - submenu_w;      // posição quando entra
-submenu_out = 320;                 // posição quando sai
+submenu_x = 320;              // começa fora (base)
+submenu_in  = 320 - submenu_w; // entra
+submenu_out = 320;            // sai
 settings_x_pad = 10;
 settings_y0 = 70;
 
 // delay do jogar (ALARM)
 start_pending = false;
-start_room = room_cutscene;  // TROQUE se quiser outra room
-start_delay_frames = 14;     // ajuste
+start_room = Room1;          // TROQUE para sua room de gameplay/cutscene
+start_delay_frames = 14;
 fade_alpha = 0;

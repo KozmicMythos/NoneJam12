@@ -1,4 +1,4 @@
-/// DRAW GUI - obj_historia
+/// DRAW GUI - obj_final_jogo
 
 // reset geral do draw gui
 draw_set_alpha(1);
@@ -7,38 +7,34 @@ draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_font(-1);
 
-// desenha a história
-contando_historia();
+// desenha o texto principal + infos
+contando_final();
 
-// ---- "PRESSIONE ENTER" ----
-// atualiza escala
+// escala atual (para o hint)
 gui_scale_x = display_get_gui_width()  / base_w;
 gui_scale_y = display_get_gui_height() / base_h;
 gui_scale   = min(gui_scale_x, gui_scale_y);
 
-var uiS = gui_scale * hist_zoom;
+var uiS = gui_scale * final_zoom;
 
+// hint ENTER com piscar
 var x_center = display_get_gui_width() * 0.5;
-// margem em "base" convertida pra GUI real:
-var y_bottom = display_get_gui_height() - (34 * uiS);
-
-// piscar 0..1
+var y_bottom = display_get_gui_height() - (22 * uiS);
 var piscar = abs(sin(current_time / 600));
 
 if (mostra_pressiona_botao) {
 
+    draw_set_font(fnt_pixel);
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
-    draw_set_font(fnt_pixel);
 
-    // mesma escala do texto (um pouco menor pra ficar bonito)
-    var esc_enter = 0.16;
+    var esc_hint = esc_hint_base * uiS;
 
     draw_text_transformed_colour(
         x_center,
         y_bottom,
         "PRESSIONE ENTER",
-        esc_enter * uiS, esc_enter * uiS, 0,
+        esc_hint, esc_hint, 0,
         c_white, c_white, c_white, c_white,
         piscar
     );

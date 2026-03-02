@@ -1,0 +1,1 @@
+global.ovinhos_ = noone

@@ -1,4 +1,3 @@
-show_debug_message(diminui_timer)
 
 if image_index > image_number - 1 {
     image_index = image_number - 1;
@@ -13,7 +12,7 @@ if diminui_alpha {
 };
 
 if image_alpha <= 0 and diminui_timer <= 0{
-    if !instance_exists(obj_cutscene_2){
+    if !instance_exists(Room1){
         instance_create_depth(x,y,depth - 1,obj_cutscene_2);
     }
 }

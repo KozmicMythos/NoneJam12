@@ -108,6 +108,14 @@ sistema_iluminacao = function(){
             
             draw_sprite_ext(spr_luz,image_index,x,y ,image_xscale * _tamanho, image_yscale * _tamanho,image_angle,c_blue,0.2); 
         }
+        with(obj_bichinho_luz_verde){
+            // Efeito de piscar
+        //  var piscar = abs(sin(current_time / 500.0));
+            var _tamanho = 0.2
+            var _pisca = random_range(0.1,0.2);
+            
+            draw_sprite_ext(spr_luz,image_index,x,y ,image_xscale * _tamanho, image_yscale * _tamanho,image_angle,c_green,0.2); 
+        }
 
 		
 		#endregion

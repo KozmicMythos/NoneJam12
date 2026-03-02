@@ -26,7 +26,7 @@ lay_col  = layer_tilemap_get_id("Map");
 mapa_verde = layer_tilemap_get_id("mapa_verde");
 
 //colisor de morte
-colisores_morte = [obj_bola_verde,obj_inimigo_gosma,obj_estaca,obj_olho_dano];
+colisores_morte = [obj_bola_verde,obj_inimigo_gosma,obj_estaca,obj_olho_dano,obj_inimigo];
 
 colisor_base = [lay_col, obj_chao, obj_check_escada, obj_plataforma,mapa_verde,obj_porta];
 
@@ -54,8 +54,8 @@ dash  = 0;
 
 
 //check dos poderes e mapa
-can_dash = true;
-can_double_jump = true;
+can_dash = false;
+can_double_jump = false;
 
 
 //qtd de pulos duplos
@@ -396,11 +396,11 @@ pula_saltador = function (){
 //matando o player
 mata_player = function () {
     
-    var botao_do_capeta = keyboard_check(ord("J"));
+    //var botao_do_capeta = keyboard_check(ord("J"));
     var _hurt = place_meeting(x,y,colisores_morte);
     
     
-    if _hurt or botao_do_capeta {   
+    if _hurt {   
         //dir = choose(1,-1);   
          troca_estado(estado_morte);
     } 
@@ -881,7 +881,7 @@ estado_portal.roda = function () {
     image_angle-= 10;
    
     if image_index > image_number - 1 {
-        room_goto(room_cutscene_final);
+        room_goto(room_final_jogo);
     }
     
 }

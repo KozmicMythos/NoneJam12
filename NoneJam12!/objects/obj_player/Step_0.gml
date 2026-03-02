@@ -19,5 +19,7 @@ move_and_collide(0,velv,colisor,22);
 //retornando o valor original
 retorna_squash();
 
-if keyboard_check(vk_escape) game_restart()
+//if keyboard_check(vk_escape) load_game();
+    
+
     

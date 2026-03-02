@@ -1,5 +1,6 @@
 
 //NOVO MAPA
+
 if mostra_mapa {
     
     /*
